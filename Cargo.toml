@@ -1,0 +1,14 @@
+[package]
+name = "wgsl-types"
+version = "0.0.1"
+edition = "2021"
+description = "WGSL Types"
+author = "konkitoman"
+license = "GPL-3.0"
+repository = "https://github.com/konkitoman/wgsl-types"
+keywords = ["wgsl-types", "wgsl"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bytes-kman = "0.1.9"
