@@ -5,13 +5,13 @@ use bytes_kman::prelude::*;
 #[derive(Bytes)]
 pub struct vec2<T>(pub T, pub T);
 
-impl<T: Clone + TBytes> From<T> for vec2<T> {
+impl<T: Clone> From<T> for vec2<T> {
     fn from(value: T) -> Self {
         Self::new(value.clone(), value)
     }
 }
 
-impl<T: TBytes> From<(T, T)> for vec2<T> {
+impl<T> From<(T, T)> for vec2<T> {
     fn from(value: (T, T)) -> Self {
         Self::new(value.0, value.1)
     }
