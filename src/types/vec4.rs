@@ -1,3 +1,5 @@
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+
 use bytes_kman::prelude::*;
 
 #[derive(Bytes)]
@@ -382,5 +384,93 @@ impl<T: TBytes + std::fmt::Debug> std::fmt::Debug for vec4<T> {
             .field("z", &self.2)
             .field("w", &self.3)
             .finish()
+    }
+}
+
+impl<T: Add<Output = T>> Add for vec4<T> {
+    type Output = vec4<T>;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        vec4(
+            self.0 + rhs.0,
+            self.1 + rhs.1,
+            self.2 + rhs.2,
+            self.3 + rhs.3,
+        )
+    }
+}
+
+impl<T: Sub<Output = T>> Sub for vec4<T> {
+    type Output = vec4<T>;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        vec4(
+            self.0 - rhs.0,
+            self.1 - rhs.1,
+            self.2 - rhs.2,
+            self.3 - rhs.3,
+        )
+    }
+}
+
+impl<T: Mul<Output = T>> Mul for vec4<T> {
+    type Output = vec4<T>;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        vec4(
+            self.0 * rhs.0,
+            self.1 * rhs.1,
+            self.2 * rhs.2,
+            self.3 * rhs.3,
+        )
+    }
+}
+
+impl<T: Div<Output = T>> Div for vec4<T> {
+    type Output = vec4<T>;
+
+    fn div(self, rhs: Self) -> Self::Output {
+        vec4(
+            self.0 / rhs.0,
+            self.1 / rhs.1,
+            self.2 / rhs.2,
+            self.3 / rhs.3,
+        )
+    }
+}
+
+impl<T: AddAssign> AddAssign for vec4<T> {
+    fn add_assign(&mut self, rhs: Self) {
+        self.0 += rhs.0;
+        self.1 += rhs.1;
+        self.2 += rhs.2;
+        self.3 += rhs.3;
+    }
+}
+
+impl<T: SubAssign> SubAssign for vec4<T> {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.0 -= rhs.0;
+        self.1 -= rhs.1;
+        self.2 -= rhs.2;
+        self.3 -= rhs.3;
+    }
+}
+
+impl<T: MulAssign> MulAssign for vec4<T> {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.0 *= rhs.0;
+        self.1 *= rhs.1;
+        self.2 *= rhs.2;
+        self.3 *= rhs.3;
+    }
+}
+
+impl<T: DivAssign> DivAssign for vec4<T> {
+    fn div_assign(&mut self, rhs: Self) {
+        self.0 /= rhs.0;
+        self.1 /= rhs.1;
+        self.2 /= rhs.2;
+        self.3 /= rhs.3;
     }
 }

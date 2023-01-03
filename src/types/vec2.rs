@@ -1,3 +1,5 @@
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+
 use bytes_kman::prelude::*;
 
 #[derive(Bytes)]
@@ -15,13 +17,15 @@ impl<T: TBytes> From<(T, T)> for vec2<T> {
     }
 }
 
-impl<T: Clone + TBytes> From<(&mut T, &mut T)> for vec2<T> {
+impl<T: Clone> From<(&mut T, &mut T)> for vec2<T> {
     fn from(value: (&mut T, &mut T)) -> Self {
         Self::new(value.0.clone(), value.1.clone())
     }
 }
 
-impl<T: TBytes> vec2<T> {
+impl<T: TBytes + Copy> Copy for vec2<T> {}
+
+impl<T> vec2<T> {
     pub fn new(x: T, y: T) -> Self {
         Self(x, y)
     }
@@ -77,5 +81,65 @@ impl<T: TBytes + std::fmt::Debug> std::fmt::Debug for vec2<T> {
             .field("x", &self.0)
             .field("y", &self.1)
             .finish()
+    }
+}
+
+impl<T: Add<Output = T>> Add for vec2<T> {
+    type Output = vec2<T>;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        vec2(self.0 + rhs.0, self.1 + rhs.1)
+    }
+}
+
+impl<T: Sub<Output = T>> Sub for vec2<T> {
+    type Output = vec2<T>;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        vec2(self.0 - rhs.0, self.1 - rhs.1)
+    }
+}
+
+impl<T: Mul<Output = T>> Mul for vec2<T> {
+    type Output = vec2<T>;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        vec2(self.0 * rhs.0, self.1 * rhs.1)
+    }
+}
+
+impl<T: Div<Output = T>> Div for vec2<T> {
+    type Output = vec2<T>;
+
+    fn div(self, rhs: Self) -> Self::Output {
+        vec2(self.0 / rhs.0, self.1 / rhs.1)
+    }
+}
+
+impl<T: AddAssign> AddAssign for vec2<T> {
+    fn add_assign(&mut self, rhs: Self) {
+        self.0 += rhs.0;
+        self.1 += rhs.1;
+    }
+}
+
+impl<T: SubAssign> SubAssign for vec2<T> {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.0 -= rhs.0;
+        self.1 -= rhs.1
+    }
+}
+
+impl<T: MulAssign> MulAssign for vec2<T> {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.0 *= rhs.0;
+        self.1 *= rhs.1;
+    }
+}
+
+impl<T: DivAssign> DivAssign for vec2<T> {
+    fn div_assign(&mut self, rhs: Self) {
+        self.0 /= rhs.0;
+        self.1 /= rhs.1;
     }
 }

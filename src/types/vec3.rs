@@ -1,27 +1,31 @@
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+
 use bytes_kman::prelude::*;
 
 #[derive(Bytes)]
 pub struct vec3<T>(pub T, pub T, pub T);
 
-impl<T: Clone + TBytes> From<T> for vec3<T> {
+impl<T: Clone> From<T> for vec3<T> {
     fn from(value: T) -> Self {
         Self(value.clone(), value.clone(), value)
     }
 }
 
-impl<T: TBytes> From<(T, T, T)> for vec3<T> {
+impl<T> From<(T, T, T)> for vec3<T> {
     fn from(value: (T, T, T)) -> Self {
         Self::new(value.0, value.1, value.2)
     }
 }
 
-impl<T: Clone + TBytes> From<(&mut T, &mut T, &mut T)> for vec3<T> {
+impl<T: Clone> From<(&mut T, &mut T, &mut T)> for vec3<T> {
     fn from(value: (&mut T, &mut T, &mut T)) -> Self {
         Self::new(value.0.clone(), value.1.clone(), value.2.clone())
     }
 }
 
-impl<T: TBytes> vec3<T> {
+impl<T: TBytes + Copy> Copy for vec3<T> {}
+
+impl<T> vec3<T> {
     pub fn new(x: T, y: T, z: T) -> Self {
         Self(x, y, z)
     }
@@ -137,5 +141,69 @@ impl<T: TBytes + std::fmt::Debug> std::fmt::Debug for vec3<T> {
             .field("y", &self.1)
             .field("z", &self.2)
             .finish()
+    }
+}
+
+impl<T: Add<Output = T>> Add for vec3<T> {
+    type Output = vec3<T>;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        vec3(self.0 + rhs.0, self.1 + rhs.1, self.2 + rhs.2)
+    }
+}
+
+impl<T: Sub<Output = T>> Sub for vec3<T> {
+    type Output = vec3<T>;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        vec3(self.0 - rhs.0, self.1 - rhs.1, self.2 - rhs.2)
+    }
+}
+
+impl<T: Mul<Output = T>> Mul for vec3<T> {
+    type Output = vec3<T>;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        vec3(self.0 * rhs.0, self.1 * rhs.1, self.2 * rhs.2)
+    }
+}
+
+impl<T: Div<Output = T>> Div for vec3<T> {
+    type Output = vec3<T>;
+
+    fn div(self, rhs: Self) -> Self::Output {
+        vec3(self.0 / rhs.0, self.1 / rhs.1, self.2 / rhs.2)
+    }
+}
+
+impl<T: AddAssign> AddAssign for vec3<T> {
+    fn add_assign(&mut self, rhs: Self) {
+        self.0 += rhs.0;
+        self.1 += rhs.1;
+        self.2 += rhs.2;
+    }
+}
+
+impl<T: SubAssign> SubAssign for vec3<T> {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.0 -= rhs.0;
+        self.1 -= rhs.1;
+        self.2 -= rhs.2;
+    }
+}
+
+impl<T: MulAssign> MulAssign for vec3<T> {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.0 *= rhs.0;
+        self.1 *= rhs.1;
+        self.2 *= rhs.2;
+    }
+}
+
+impl<T: DivAssign> DivAssign for vec3<T> {
+    fn div_assign(&mut self, rhs: Self) {
+        self.0 /= rhs.0;
+        self.1 /= rhs.1;
+        self.2 /= rhs.2;
     }
 }
