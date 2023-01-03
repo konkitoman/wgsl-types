@@ -1,9 +1,9 @@
 [package]
 name = "wgsl-types"
-version = "0.0.2"
+version = "0.0.3"
 edition = "2021"
 description = "WGSL Types"
-author = "konkitoman"
+authors = ["konkitoman"]
 license = "GPL-3.0"
 repository = "https://github.com/konkitoman/wgsl-types"
 keywords = ["wgsl-types", "wgsl"]

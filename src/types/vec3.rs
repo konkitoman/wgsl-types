@@ -1,19 +1,11 @@
 use bytes_kman::prelude::*;
 
 #[derive(Bytes)]
-pub struct vec3<T> {
-    pub x: T,
-    pub y: T,
-    pub z: T,
-}
+pub struct vec3<T>(pub T, pub T, pub T);
 
 impl<T: Clone + TBytes> From<T> for vec3<T> {
     fn from(value: T) -> Self {
-        Self {
-            x: value.clone(),
-            y: value.clone(),
-            z: value,
-        }
+        Self(value.clone(), value.clone(), value)
     }
 }
 
@@ -31,60 +23,60 @@ impl<T: Clone + TBytes> From<(&mut T, &mut T, &mut T)> for vec3<T> {
 
 impl<T: TBytes> vec3<T> {
     pub fn new(x: T, y: T, z: T) -> Self {
-        Self { x, y, z }
+        Self(x, y, z)
     }
 
     pub fn x(&mut self) -> &mut T {
-        &mut self.x
+        &mut self.0
     }
 
     pub fn y(&mut self) -> &mut T {
-        &mut self.y
+        &mut self.1
     }
 
     pub fn z(&mut self) -> &mut T {
-        &mut self.z
+        &mut self.2
     }
 
     pub fn xy(&mut self) -> (&mut T, &mut T) {
-        (&mut self.x, &mut self.y)
+        (&mut self.0, &mut self.1)
     }
     pub fn yx(&mut self) -> (&mut T, &mut T) {
-        (&mut self.y, &mut self.x)
+        (&mut self.1, &mut self.0)
     }
 
     pub fn xz(&mut self) -> (&mut T, &mut T) {
-        (&mut self.x, &mut self.z)
+        (&mut self.0, &mut self.2)
     }
     pub fn zx(&mut self) -> (&mut T, &mut T) {
-        (&mut self.z, &mut self.x)
+        (&mut self.2, &mut self.0)
     }
 
     pub fn yz(&mut self) -> (&mut T, &mut T) {
-        (&mut self.y, &mut self.z)
+        (&mut self.1, &mut self.2)
     }
     pub fn zy(&mut self) -> (&mut T, &mut T) {
-        (&mut self.z, &mut self.y)
+        (&mut self.2, &mut self.1)
     }
 
     pub fn xyz(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.y, &mut self.z)
+        (&mut self.0, &mut self.1, &mut self.2)
     }
     pub fn zxy(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.x, &mut self.y)
+        (&mut self.2, &mut self.0, &mut self.1)
     }
     pub fn yzx(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.z, &mut self.x)
+        (&mut self.1, &mut self.2, &mut self.0)
     }
 
     pub fn yxz(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.x, &mut self.z)
+        (&mut self.1, &mut self.0, &mut self.2)
     }
     pub fn zyx(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.y, &mut self.x)
+        (&mut self.2, &mut self.1, &mut self.0)
     }
     pub fn xzy(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.z, &mut self.y)
+        (&mut self.0, &mut self.2, &mut self.1)
     }
 
     pub fn r(&mut self) -> &mut T {
@@ -132,28 +124,18 @@ impl<T: TBytes> vec3<T> {
     }
 }
 
-impl<T: TBytes + PartialEq> PartialEq for vec3<T> {
-    fn eq(&self, other: &Self) -> bool {
-        self.x == other.x && self.y == other.y && self.z == other.z
-    }
-}
-
 impl<T: TBytes + Clone> Clone for vec3<T> {
     fn clone(&self) -> Self {
-        Self {
-            x: self.x.clone(),
-            y: self.y.clone(),
-            z: self.z.clone(),
-        }
+        Self(self.0.clone(), self.1.clone(), self.2.clone())
     }
 }
 
 impl<T: TBytes + std::fmt::Debug> std::fmt::Debug for vec3<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("vec3")
-            .field("x", &self.x)
-            .field("y", &self.y)
-            .field("z", &self.z)
+            .field("x", &self.0)
+            .field("y", &self.1)
+            .field("z", &self.2)
             .finish()
     }
 }

@@ -1,12 +1,7 @@
 use bytes_kman::prelude::*;
 
 #[derive(Bytes)]
-pub struct vec4<T> {
-    pub x: T,
-    pub y: T,
-    pub z: T,
-    pub w: T,
-}
+pub struct vec4<T>(pub T, pub T, pub T, pub T);
 
 impl<T: Clone + TBytes> From<T> for vec4<T> {
     fn from(value: T) -> Self {
@@ -33,196 +28,196 @@ impl<T: Clone + TBytes> From<(&mut T, &mut T, &mut T, &mut T)> for vec4<T> {
 
 impl<T: TBytes> vec4<T> {
     pub fn new(x: T, y: T, z: T, w: T) -> Self {
-        Self { x, y, z, w }
+        Self(x, y, z, w)
     }
 
     pub fn x(&mut self) -> &mut T {
-        &mut self.x
+        &mut self.0
     }
 
     pub fn y(&mut self) -> &mut T {
-        &mut self.y
+        &mut self.1
     }
 
     pub fn z(&mut self) -> &mut T {
-        &mut self.z
+        &mut self.2
     }
 
     pub fn w(&mut self) -> &mut T {
-        &mut self.w
+        &mut self.3
     }
 
     pub fn xy(&mut self) -> (&mut T, &mut T) {
-        (&mut self.x, &mut self.y)
+        (&mut self.0, &mut self.1)
     }
     pub fn yx(&mut self) -> (&mut T, &mut T) {
-        (&mut self.y, &mut self.x)
+        (&mut self.1, &mut self.0)
     }
 
     pub fn xz(&mut self) -> (&mut T, &mut T) {
-        (&mut self.x, &mut self.z)
+        (&mut self.0, &mut self.2)
     }
     pub fn zx(&mut self) -> (&mut T, &mut T) {
-        (&mut self.z, &mut self.x)
+        (&mut self.2, &mut self.0)
     }
 
     pub fn yz(&mut self) -> (&mut T, &mut T) {
-        (&mut self.y, &mut self.z)
+        (&mut self.1, &mut self.2)
     }
     pub fn zy(&mut self) -> (&mut T, &mut T) {
-        (&mut self.z, &mut self.y)
+        (&mut self.2, &mut self.1)
     }
 
     pub fn xyz(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.y, &mut self.z)
+        (&mut self.0, &mut self.1, &mut self.2)
     }
     pub fn zxy(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.x, &mut self.y)
+        (&mut self.2, &mut self.0, &mut self.1)
     }
     pub fn yzx(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.z, &mut self.x)
+        (&mut self.1, &mut self.2, &mut self.0)
     }
 
     pub fn yxz(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.x, &mut self.z)
+        (&mut self.1, &mut self.0, &mut self.2)
     }
     pub fn zyx(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.y, &mut self.x)
+        (&mut self.2, &mut self.1, &mut self.0)
     }
     pub fn xzy(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.z, &mut self.y)
+        (&mut self.0, &mut self.2, &mut self.1)
     }
 
     pub fn xw(&mut self) -> (&mut T, &mut T) {
-        (&mut self.x, &mut self.w)
+        (&mut self.0, &mut self.3)
     }
     pub fn wx(&mut self) -> (&mut T, &mut T) {
-        (&mut self.w, &mut self.x)
+        (&mut self.3, &mut self.0)
     }
 
     pub fn zw(&mut self) -> (&mut T, &mut T) {
-        (&mut self.z, &mut self.w)
+        (&mut self.2, &mut self.3)
     }
     pub fn wz(&mut self) -> (&mut T, &mut T) {
-        (&mut self.w, &mut self.z)
+        (&mut self.3, &mut self.2)
     }
 
     pub fn xyw(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.y, &mut self.w)
+        (&mut self.0, &mut self.1, &mut self.3)
     }
     pub fn wxy(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.x, &mut self.y)
+        (&mut self.3, &mut self.0, &mut self.1)
     }
     pub fn ywx(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.w, &mut self.x)
+        (&mut self.1, &mut self.3, &mut self.0)
     }
 
     pub fn yxw(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.x, &mut self.w)
+        (&mut self.1, &mut self.0, &mut self.3)
     }
     pub fn wyx(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.y, &mut self.x)
+        (&mut self.3, &mut self.1, &mut self.0)
     }
     pub fn xwy(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.w, &mut self.y)
+        (&mut self.0, &mut self.3, &mut self.1)
     }
 
     pub fn xwz(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.w, &mut self.z)
+        (&mut self.0, &mut self.3, &mut self.2)
     }
     pub fn zxw(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.x, &mut self.w)
+        (&mut self.2, &mut self.0, &mut self.3)
     }
     pub fn wzx(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.z, &mut self.x)
+        (&mut self.3, &mut self.2, &mut self.0)
     }
 
     pub fn wxz(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.x, &mut self.z)
+        (&mut self.3, &mut self.0, &mut self.2)
     }
     pub fn zwx(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.w, &mut self.x)
+        (&mut self.2, &mut self.3, &mut self.0)
     }
     pub fn xzw(&mut self) -> (&mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.z, &mut self.w)
+        (&mut self.0, &mut self.2, &mut self.3)
     }
 
     pub fn xyzw(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.y, &mut self.z, &mut self.w)
+        (&mut self.0, &mut self.1, &mut self.2, &mut self.3)
     }
     pub fn wxyz(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.x, &mut self.y, &mut self.z)
+        (&mut self.3, &mut self.0, &mut self.1, &mut self.2)
     }
     pub fn zwxy(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.w, &mut self.x, &mut self.y)
+        (&mut self.2, &mut self.3, &mut self.0, &mut self.1)
     }
     pub fn yzwx(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.z, &mut self.w, &mut self.x)
+        (&mut self.1, &mut self.2, &mut self.3, &mut self.0)
     }
 
     pub fn yxzw(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.x, &mut self.z, &mut self.w)
+        (&mut self.1, &mut self.0, &mut self.2, &mut self.3)
     }
     pub fn wyxz(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.y, &mut self.x, &mut self.z)
+        (&mut self.3, &mut self.1, &mut self.0, &mut self.2)
     }
     pub fn zwyx(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.w, &mut self.y, &mut self.x)
+        (&mut self.2, &mut self.3, &mut self.1, &mut self.0)
     }
     pub fn xzwy(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.z, &mut self.w, &mut self.y)
+        (&mut self.0, &mut self.2, &mut self.3, &mut self.1)
     }
 
     pub fn xywz(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.y, &mut self.w, &mut self.z)
+        (&mut self.0, &mut self.1, &mut self.3, &mut self.2)
     }
     pub fn zxyw(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.x, &mut self.y, &mut self.w)
+        (&mut self.2, &mut self.0, &mut self.1, &mut self.3)
     }
     pub fn wzxy(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.z, &mut self.x, &mut self.y)
+        (&mut self.3, &mut self.2, &mut self.0, &mut self.1)
     }
     pub fn ywzx(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.w, &mut self.z, &mut self.x)
+        (&mut self.1, &mut self.3, &mut self.2, &mut self.0)
     }
 
     pub fn xzyw(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.z, &mut self.y, &mut self.w)
+        (&mut self.0, &mut self.2, &mut self.1, &mut self.3)
     }
     pub fn wxzy(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.x, &mut self.z, &mut self.y)
+        (&mut self.3, &mut self.0, &mut self.2, &mut self.1)
     }
     pub fn ywxz(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.w, &mut self.x, &mut self.z)
+        (&mut self.1, &mut self.3, &mut self.0, &mut self.2)
     }
     pub fn zywx(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.y, &mut self.w, &mut self.x)
+        (&mut self.2, &mut self.1, &mut self.3, &mut self.0)
     }
 
     pub fn wyzx(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.y, &mut self.z, &mut self.x)
+        (&mut self.3, &mut self.1, &mut self.2, &mut self.0)
     }
     pub fn xwyz(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.w, &mut self.y, &mut self.z)
+        (&mut self.0, &mut self.3, &mut self.1, &mut self.2)
     }
     pub fn zxwy(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.x, &mut self.w, &mut self.y)
+        (&mut self.2, &mut self.0, &mut self.3, &mut self.1)
     }
     pub fn yzxw(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.z, &mut self.x, &mut self.w)
+        (&mut self.1, &mut self.2, &mut self.0, &mut self.3)
     }
 
     pub fn xwzy(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.x, &mut self.w, &mut self.z, &mut self.y)
+        (&mut self.0, &mut self.3, &mut self.2, &mut self.1)
     }
     pub fn yxwz(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.y, &mut self.x, &mut self.w, &mut self.z)
+        (&mut self.1, &mut self.0, &mut self.3, &mut self.2)
     }
     pub fn zyxw(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.z, &mut self.y, &mut self.x, &mut self.w)
+        (&mut self.2, &mut self.1, &mut self.0, &mut self.3)
     }
     pub fn wzyx(&mut self) -> (&mut T, &mut T, &mut T, &mut T) {
-        (&mut self.w, &mut self.z, &mut self.y, &mut self.x)
+        (&mut self.3, &mut self.2, &mut self.1, &mut self.0)
     }
 
     pub fn r(&mut self) -> &mut T {
@@ -368,30 +363,24 @@ impl<T: TBytes> vec4<T> {
     }
 }
 
-impl<T: TBytes + PartialEq> PartialEq for vec4<T> {
-    fn eq(&self, other: &Self) -> bool {
-        self.x == other.x && self.y == other.y && self.z == other.z && self.w == other.w
-    }
-}
-
 impl<T: TBytes + Clone> Clone for vec4<T> {
     fn clone(&self) -> Self {
-        Self {
-            x: self.x.clone(),
-            y: self.y.clone(),
-            z: self.z.clone(),
-            w: self.w.clone(),
-        }
+        Self(
+            self.0.clone(),
+            self.1.clone(),
+            self.2.clone(),
+            self.3.clone(),
+        )
     }
 }
 
 impl<T: TBytes + std::fmt::Debug> std::fmt::Debug for vec4<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("vec4")
-            .field("x", &self.x)
-            .field("y", &self.y)
-            .field("z", &self.z)
-            .field("w", &self.w)
+            .field("x", &self.0)
+            .field("y", &self.1)
+            .field("z", &self.2)
+            .field("w", &self.3)
             .finish()
     }
 }
