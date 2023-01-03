@@ -17,8 +17,8 @@ impl<T: TBytes> From<(T, T)> for vec2<T> {
     }
 }
 
-impl<T: Clone> From<(&mut T, &mut T)> for vec2<T> {
-    fn from(value: (&mut T, &mut T)) -> Self {
+impl<T: Clone> From<(&T, &T)> for vec2<T> {
+    fn from(value: (&T, &T)) -> Self {
         Self::new(value.0.clone(), value.1.clone())
     }
 }
@@ -30,35 +30,35 @@ impl<T> vec2<T> {
         Self(x, y)
     }
 
-    pub fn x(&mut self) -> &mut T {
-        &mut self.0
+    pub fn x(&self) -> &T {
+        &self.0
     }
 
-    pub fn y(&mut self) -> &mut T {
-        &mut self.1
+    pub fn y(&self) -> &T {
+        &self.1
     }
 
-    pub fn xy(&mut self) -> (&mut T, &mut T) {
-        (&mut self.0, &mut self.1)
+    pub fn xy(&self) -> (&T, &T) {
+        (self.x(), self.y())
     }
 
-    pub fn yx(&mut self) -> (&mut T, &mut T) {
-        (&mut self.1, &mut self.0)
+    pub fn yx(&self) -> (&T, &T) {
+        (self.y(), self.x())
     }
 
-    pub fn r(&mut self) -> &mut T {
+    pub fn r(&self) -> &T {
         self.x()
     }
 
-    pub fn g(&mut self) -> &mut T {
+    pub fn g(&self) -> &T {
         self.y()
     }
 
-    pub fn rg(&mut self) -> (&mut T, &mut T) {
+    pub fn rg(&self) -> (&T, &T) {
         self.xy()
     }
 
-    pub fn gr(&mut self) -> (&mut T, &mut T) {
+    pub fn gr(&self) -> (&T, &T) {
         self.yx()
     }
 }
